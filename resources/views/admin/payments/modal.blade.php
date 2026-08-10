@@ -2,14 +2,14 @@
 <div x-data="{ open: false }" x-init="window.addEventListener('proofOfPaymentModal', () => open = true)" x-show="open" x-cloak class="relative z-40" role="dialog" aria-modal="true">
     <div x-show="open" x-transition.opacity class="fixed inset-0 bg-gray-900/40" @click="open = false"></div>
     <div class="fixed inset-0 flex items-center justify-center p-4">
-        <div x-show="open" x-transition class="w-full max-w-lg rounded-2xl bg-white shadow-xl">
+        <div x-show="open" x-transition class="flex max-h-[90vh] w-full max-w-lg flex-col rounded-2xl bg-white shadow-xl">
             <div class="flex items-center justify-between border-b border-gray-200 px-6 py-4">
                 <h3 class="text-lg font-semibold text-gray-900">@lang('dashboard.payment.proof_of_payment')</h3>
                 <button type="button" @click="open = false" class="text-gray-400 hover:text-gray-600">
                     <x-admin.icon name="x-mark" class="h-5 w-5" />
                 </button>
             </div>
-            <div class="px-6 py-4">
+            <div class="flex-1 overflow-y-auto px-6 py-4">
                 @if ($image)
                     <a href="{{ $image }}" target="_blank">
                         <img src="{{ $image }}" alt="{{ $name }}" class="w-full rounded-xl">
