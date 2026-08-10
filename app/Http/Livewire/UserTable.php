@@ -187,6 +187,25 @@ class UserTable extends DataTableComponent
         $this->dispatch('closeDeleteSelectedConfirmModal');
     }
 
+    public function loginAs($id)
+    {
+        // The /data/master-data route this table is embedded on isn't
+        // middleware-gated, so this check can't rely on route protection -
+        // it has to hold on its own since it grants full account access.
+        abort_unless(auth()->user()?->hasRole('admin'), 403);
+
+        $target = User::findOrFail($id);
+
+        if ($target->id === auth()->id() || $target->hasRole('admin') || !$target->is_active) {
+            return;
+        }
+
+        session(['impersonator_id' => auth()->id()]);
+        auth()->login($target);
+
+        return redirect()->route('dashboard.index');
+    }
+
     public function customView(): string
     {
         return 'admin.users.modal';

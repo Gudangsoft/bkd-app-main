@@ -241,6 +241,18 @@ class UserController extends Controller
         //
     }
 
+    public function stopLoginAs()
+    {
+        if (!session()->has('impersonator_id')) {
+            return redirect()->route('dashboard.index');
+        }
+
+        $adminId = session()->pull('impersonator_id');
+        auth()->loginUsingId($adminId);
+
+        return redirect()->route('users.index');
+    }
+
     public function profile($id)
     {
         return view('admin.users.profile');

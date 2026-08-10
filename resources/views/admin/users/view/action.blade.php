@@ -6,6 +6,11 @@
         <a href="#" @click.prevent="open = false" wire:click="edit({{ $row->id }})" class="flex items-center gap-2 rounded-lg px-3 py-2 text-sm text-gray-600 hover:bg-gray-100">
             <x-admin.icon name="pencil" class="h-4 w-4" /> Edit
         </a>
+        @if ($row->is_active && $row->id !== auth()->id() && !$row->hasRole('admin'))
+            <a href="#" @click.prevent="open = false" wire:click="loginAs({{ $row->id }})" class="flex items-center gap-2 rounded-lg px-3 py-2 text-sm text-gray-600 hover:bg-gray-100">
+                <x-admin.icon name="user" class="h-4 w-4" /> Login As
+            </a>
+        @endif
         <a href="#" @click.prevent="open = false" wire:click="resetPassword({{ $row->id }})" class="flex items-center gap-2 rounded-lg px-3 py-2 text-sm text-gray-600 hover:bg-gray-100">
             <x-admin.icon name="key" class="h-4 w-4" /> Reset Password
         </a>

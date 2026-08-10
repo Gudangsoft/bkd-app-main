@@ -77,6 +77,12 @@ use Illuminate\Support\Facades\Route;
         Route::resource('ads', AdController::class);
     });
 
+    // Deliberately outside the role:admin group: while impersonating, the
+    // active session's role is the impersonated user's, not admin's, so
+    // this route must stay reachable. UserController::stopLoginAs() checks
+    // session('impersonator_id') itself instead of relying on middleware.
+    Route::post('/login-as/stop', [UserController::class, 'stopLoginAs'])->name('login-as.stop');
+
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
