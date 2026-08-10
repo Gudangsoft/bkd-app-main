@@ -23,9 +23,17 @@ class DashboardController extends Controller
             'bkd_success' => Payment::where('status_accessor_one', 3)->where('status_accessor_two', 3)->get()->count(),
             'bkd_pending' => Payment::where('status_accessor_one', 2)->where('status_accessor_two', 2)->get()->count(),
         ];
-        // dd($count);
+
+        $assessorQuery = User::where('is_active', true)->role('asesor');
+        $assessors = [
+            'internal' => (clone $assessorQuery)->where('status', 'internal')->orderBy('name')->get(['id', 'name', 'campus_origin']),
+            'external' => (clone $assessorQuery)->where('status', 'external')->orderBy('name')->get(['id', 'name', 'campus_origin']),
+            'external_dif' => (clone $assessorQuery)->where('status', 'external_dif')->orderBy('name')->get(['id', 'name', 'campus_origin']),
+        ];
+
         return view('admin.index', [
             'count' => $count,
+            'assessors' => $assessors,
             'monthly_assessor_registed_chart' => $monthly_assessor_registed_chart->build($request->year),
         ]);
     }

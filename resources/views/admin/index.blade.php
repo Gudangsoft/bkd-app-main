@@ -62,4 +62,41 @@
             <p class="mt-1 text-2xl font-semibold text-gray-900">{{ $count['assessor'] }}</p>
         </div>
     </div>
+
+    <h2 class="mb-3 mt-8 text-sm font-semibold uppercase tracking-wide text-gray-400">Daftar Asesor</h2>
+    <div class="grid grid-cols-1 gap-4 lg:grid-cols-3">
+        @foreach ([
+            'internal' => 'Asesor Internal',
+            'external' => 'Asesor Eksternal',
+            'external_dif' => 'Asesor Non Kepanitiaan',
+        ] as $key => $label)
+            <div class="rounded-2xl border border-gray-200 bg-white p-4">
+                <h3 class="mb-3 text-xs font-semibold uppercase tracking-wide text-gray-500">{{ $label }}</h3>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left text-xs">
+                        <thead>
+                            <tr class="border-b border-gray-200 text-[11px] font-semibold uppercase tracking-wide text-gray-400">
+                                <th class="w-8 py-1.5 pr-2">No</th>
+                                <th class="py-1.5 pr-2">Nama</th>
+                                <th class="py-1.5">Asal Kampus</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-gray-100">
+                            @forelse ($assessors[$key] as $i => $item)
+                                <tr>
+                                    <td class="py-1.5 pr-2 text-gray-500">{{ $i + 1 }}</td>
+                                    <td class="py-1.5 pr-2 text-gray-700">{{ $item->name }}</td>
+                                    <td class="py-1.5 text-gray-500">{{ $item->campus_origin ?? '-' }}</td>
+                                </tr>
+                            @empty
+                                <tr>
+                                    <td colspan="3" class="py-2 text-gray-400">Belum ada data</td>
+                                </tr>
+                            @endforelse
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        @endforeach
+    </div>
 @endsection
