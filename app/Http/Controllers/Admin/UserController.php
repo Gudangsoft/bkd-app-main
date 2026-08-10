@@ -42,11 +42,13 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        // dd($request);
         $validate = $request->validate([
             'name'  => 'required',
             'nidn' => 'required|unique:users',
             'email' => 'required|unique:users',
+            'role' => 'required|in:asesor,dosen,operator,admin,guest',
+            'status' => 'nullable|in:user,internal,external,external_dif',
+            'assessor_fee' => 'nullable|integer',
             'image' => 'image|mimes:jpeg,png,jpg,gif|dimensions:max_width=1500,max_height:1500',
         ]);
 
@@ -87,6 +89,7 @@ class UserController extends Controller
                         break;
                     case 'external_dif':
                         $code = 4;
+                        break;
                     default:
                         $code = 3;
                         break;
@@ -106,7 +109,9 @@ class UserController extends Controller
             Alert::success('Success', Lang::get('dashboard.user.create_success'));
             return back();
         } catch (Exception $error) {
-            dd($error->getMessage());
+            report($error);
+            Alert::error('Failed', 'Gagal menyimpan user: ' . $error->getMessage());
+            return back()->withInput();
         }
     }
 
@@ -141,6 +146,11 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $request->validate([
+            'status' => 'nullable|in:user,internal,external,external_dif',
+            'assessor_fee' => 'nullable|integer',
+        ]);
+
         $image = '';
         if ($request->file('image')) {
             $validate = $request->validate([
@@ -181,6 +191,7 @@ class UserController extends Controller
                         break;
                     case 'external_dif':
                         $code = 4;
+                        break;
                     default:
                         $code = 3;
                         break;
@@ -200,7 +211,9 @@ class UserController extends Controller
             Alert::success('Success', Lang::get('dashboard.user.edit_success'));
             return back();
         } catch (Exception $error) {
-            dd($error->getMessage());
+            report($error);
+            Alert::error('Failed', 'Gagal menyimpan user: ' . $error->getMessage());
+            return back()->withInput();
         }
     }
 

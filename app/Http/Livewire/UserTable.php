@@ -77,7 +77,8 @@ class UserTable extends DataTableComponent
                     '' => 'All',
                     'user' => 'User',
                     'internal' => 'Internal',
-                    'eksternal' => 'Eksternal',
+                    'external' => 'Eksternal',
+                    'external_dif' => 'Eksternal (di luar kepanitiaan)',
                     'serdos' => 'Serdos',
                     'non-serdos' => 'Non Serdos',
                 ])

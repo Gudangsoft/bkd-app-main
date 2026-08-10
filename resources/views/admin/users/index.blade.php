@@ -15,7 +15,7 @@
             </nav>
         </div>
 
-        <div x-data="{ createOpen: false }">
+        <div x-data="{ createOpen: {{ $errors->any() ? 'true' : 'false' }} }">
             <button type="button" @click="createOpen = true"
                 class="inline-flex items-center gap-2 rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm font-semibold text-gray-700 hover:bg-gray-50">
                 <x-admin.icon name="user" class="h-4 w-4" />
@@ -43,24 +43,33 @@
                             </div>
 
                             <div class="flex-1 space-y-4 px-6 py-4">
+                                @if ($errors->any())
+                                    <div class="rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+                                        <ul class="list-inside list-disc space-y-1">
+                                            @foreach ($errors->all() as $error)
+                                                <li>{{ $error }}</li>
+                                            @endforeach
+                                        </ul>
+                                    </div>
+                                @endif
                                 <div>
                                     <label class="mb-1 block text-sm font-medium text-gray-700">NIDN</label>
-                                    <input type="number" name="nidn" required
+                                    <input type="number" name="nidn" value="{{ old('nidn') }}" required
                                         class="block w-full rounded-lg border-gray-300 text-sm focus:border-accent-500 focus:ring-accent-500">
                                 </div>
                                 <div>
                                     <label class="mb-1 block text-sm font-medium text-gray-700">Full Name</label>
-                                    <input type="text" name="name" placeholder="Elon Musk" required
+                                    <input type="text" name="name" value="{{ old('name') }}" placeholder="Elon Musk" required
                                         class="block w-full rounded-lg border-gray-300 text-sm focus:border-accent-500 focus:ring-accent-500">
                                 </div>
                                 <div>
                                     <label class="mb-1 block text-sm font-medium text-gray-700">Email</label>
-                                    <input type="email" name="email" placeholder="elon@gmail.com" required
+                                    <input type="email" name="email" value="{{ old('email') }}" placeholder="elon@gmail.com" required
                                         class="block w-full rounded-lg border-gray-300 text-sm focus:border-accent-500 focus:ring-accent-500">
                                 </div>
                                 <div>
                                     <label class="mb-1 block text-sm font-medium text-gray-700">Asal PT/Prodi</label>
-                                    <input type="text" name="progdi"
+                                    <input type="text" name="progdi" value="{{ old('progdi') }}"
                                         placeholder="UNIVERSITAS SAINS DAN TEKNOLOGI KOMPUTER / Teknik Informatika" required
                                         class="block w-full rounded-lg border-gray-300 text-sm focus:border-accent-500 focus:ring-accent-500">
                                 </div>
@@ -90,7 +99,7 @@
                                     <label class="mb-1 block text-sm font-medium text-gray-700">Status Dosen</label>
                                     <select name="assessor_fee"
                                         class="block w-full rounded-lg border-gray-300 text-sm focus:border-accent-500 focus:ring-accent-500">
-                                        <option value="user">Pilih status</option>
+                                        <option value="">Pilih status</option>
                                         <option value="1">Serdos</option>
                                         <option value="2">Non Serdos</option>
                                         <option value="3">User Normal</option>
