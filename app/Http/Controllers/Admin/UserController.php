@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Lang;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rule;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class UserController extends Controller
@@ -44,8 +45,8 @@ class UserController extends Controller
     {
         $validate = $request->validate([
             'name'  => 'required',
-            'nidn' => 'required|unique:users',
-            'email' => 'required|unique:users',
+            'nidn' => ['required', Rule::unique('users')->whereNull('deleted_at')],
+            'email' => ['required', Rule::unique('users')->whereNull('deleted_at')],
             'role' => 'required|in:asesor,dosen,operator,admin,guest',
             'status' => 'nullable|in:user,internal,external,external_dif',
             'assessor_fee' => 'nullable|integer',
@@ -69,11 +70,21 @@ class UserController extends Controller
         }
 
         try {
-            $save = new User();
+            $trashed = User::onlyTrashed()
+                ->where('email', $request->email)
+                ->orWhere('nidn', $request->nidn)
+                ->first();
+
+            $save = $trashed ?: new User();
+            if ($trashed) {
+                $save->restore();
+            } else {
+                $save->username = Str::slug($request->name) . rand(10, 100);
+                $save->password = Hash::make('12345678');
+            }
+
             $save->name = $request->name;
-            $save->username = Str::slug($request->name) . rand(10, 100);
             $save->email = $request->email;
-            $save->password = Hash::make('12345678');
             $save->is_active = true;
             $save->nidn = $request->nidn;
             $save->progdi = $request->progdi;
@@ -104,7 +115,7 @@ class UserController extends Controller
                 $save->image = $image;
             }
             $save->save();
-            $save->assignRole($request->role);
+            $save->syncRoles($request->role);
 
             Alert::success('Success', Lang::get('dashboard.user.create_success'));
             return back();
