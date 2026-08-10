@@ -83,15 +83,17 @@ document.addEventListener('alpine:init', () => {
     }));
 
     // Live-previews a chosen image file before upload. Replaces a jQuery
-    // FileReader handler used on the settings/app-logo picker.
+    // FileReader handler used on the settings image pickers (app logo,
+    // login background). refName selects which x-ref <img> to update, so
+    // multiple pickers can share the same component instance.
     Alpine.data('imagePreview', () => ({
-        onFileChange(el) {
+        onFileChange(el, refName = 'preview') {
             const file = el.files[0];
             if (!file) return;
 
             const reader = new FileReader();
             reader.onload = () => {
-                this.$refs.preview.src = reader.result;
+                this.$refs[refName].src = reader.result;
             };
             reader.readAsDataURL(file);
         },

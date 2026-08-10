@@ -47,10 +47,14 @@
     <script src="{{ asset('assets') }}/js/base/loader.js"></script>
 </head>
 
+@php
+    $loginBackgroundUrl = optional(\App\Models\Setting::first())->loginBackgroundUrl
+        ?? asset('assets/img/background/background-blue.webp');
+@endphp
 <body class="h-100">
     <div id="root" class="h-100">
         <!-- Background Start -->
-        <div class="fixed-background"></div>
+        <div class="fixed-background" style="background-image: url('{{ $loginBackgroundUrl }}')"></div>
         <!-- Background End -->
 
         <div class="container-fluid p-0 h-100 position-relative">

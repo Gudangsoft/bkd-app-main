@@ -60,6 +60,20 @@
             </div>
 
             <div>
+                <label class="mb-2 block text-sm font-semibold uppercase tracking-wide text-gray-400">Login Background</label>
+                <div class="flex flex-col items-center gap-3 rounded-xl border border-gray-100 bg-gray-50 p-4 text-center">
+                    <img x-ref="loginBackgroundPreview"
+                        src="{{ $data->loginBackgroundUrl ?? asset('assets/img/background/background-blue.webp') }}"
+                        alt="Login Background" class="h-32 w-full rounded-lg object-cover">
+                    <label for="change-login-background" class="cursor-pointer rounded-lg bg-accent-600 px-4 py-2 text-sm font-semibold text-white hover:bg-accent-700">
+                        Pilih Image
+                        <input id="change-login-background" name="login_background" type="file" class="hidden"
+                            accept="image/png, image/jpeg, image/jpg, image/webp" @change="onFileChange($event.target, 'loginBackgroundPreview')">
+                    </label>
+                </div>
+            </div>
+
+            <div>
                 <label class="mb-1 block text-sm font-semibold uppercase tracking-wide text-gray-400">Description</label>
                 <textarea name="description" rows="5"
                     class="block w-full rounded-lg border-gray-300 text-sm focus:border-accent-500 focus:ring-accent-500">{{ $data->description ?? '' }}</textarea>

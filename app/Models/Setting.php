@@ -20,4 +20,13 @@ class Setting extends Model
     {
         return asset('storage/manual_book').'/'.$this->manual_book;
     }
+
+    public function getLoginBackgroundUrlAttribute()
+    {
+        if ($this->login_background) {
+            return asset('storage/login_background').'/'.$this->login_background;
+        }
+
+        return asset('assets/img/background/background-blue.webp');
+    }
 }

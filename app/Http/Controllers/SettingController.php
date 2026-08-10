@@ -49,6 +49,12 @@ class SettingController extends Controller
             $path = Storage::putFileAs('public/manual_book', $request->file('manual_book'), $pdfName);
         }
 
+        if ($request->login_background) {
+            $this->validate($request, ['login_background' => 'image|max:5000']);
+            $loginBackgroundName = time() . '.' . $request->file('login_background')->extension();
+            $path = Storage::putFileAs('public/login_background', $request->file('login_background'), $loginBackgroundName);
+        }
+
         try {
             if ($request->setting_id > 0) {
                 $save = Setting::find($request->setting_id);
@@ -68,6 +74,9 @@ class SettingController extends Controller
             $save->description = $request->description;
             if ($request->logo) {
                 $save->logo = $logoName;
+            }
+            if ($request->login_background) {
+                $save->login_background = $loginBackgroundName;
             }
             $save->save();
 
