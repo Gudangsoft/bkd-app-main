@@ -63,15 +63,6 @@
                 <div class="offset-0 col-12 d-none d-lg-flex offset-md-1 col-lg h-lg-100">
                     <div class="min-h-100 d-flex align-items-center">
                         <div class="w-100 w-lg-75 w-xxl-50">
-                            <div>
-                                <div class="mb-5">
-                                    <h1 class="display-3 text-white">{{ config('app.name') }}</h1>
-                                </div>
-                                <p class="h6 text-white lh-1-5 mb-5">
-                                    Setiap rintangan adalah satu langkah lebih dekat dengan tujuan Anda. Teruskan, Anda
-                                    membuat kemajuan.
-                                </p>
-                            </div>
                         </div>
                     </div>
                 </div>
