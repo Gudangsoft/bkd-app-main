@@ -1,0 +1,6 @@
+[21-Aug-2025 07:45:28 UTC] PHP Warning:  require(/home/kabarkad/public_html/bkd2025.gosmart.id/dashboard-si/public/../vendor/autoload.php): Failed to open stream: No such file or directory in /home/kabarkad/public_html/bkd2025.gosmart.id/dashboard-si/public/index.php on line 34
+[21-Aug-2025 07:45:28 UTC] PHP Warning:  require(/home/kabarkad/public_html/bkd2025.gosmart.id/dashboard-si/public/../vendor/autoload.php): Failed to open stream: No such file or directory in /home/kabarkad/public_html/bkd2025.gosmart.id/dashboard-si/public/index.php on line 34
+[21-Aug-2025 07:45:28 UTC] PHP Fatal error:  Uncaught Error: Failed opening required '/home/kabarkad/public_html/bkd2025.gosmart.id/dashboard-si/public/../vendor/autoload.php' (include_path='.:/opt/alt/php82/usr/share/pear:/opt/alt/php82/usr/share/php:/usr/share/pear:/usr/share/php') in /home/kabarkad/public_html/bkd2025.gosmart.id/dashboard-si/public/index.php:34
+Stack trace:
+#0 {main}
+  thrown in /home/kabarkad/public_html/bkd2025.gosmart.id/dashboard-si/public/index.php on line 34

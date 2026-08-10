@@ -1,0 +1,190 @@
+/* ==========================================================================
+   Modern Minimalist skin
+   Layered on top of the Acorn admin theme (styles.css / main.css). Instead of
+   forking the vendor stylesheet, this overrides the CSS custom properties the
+   theme already exposes (colors, radius, shadows, fonts) plus a handful of
+   hardcoded rules the vendor didn't tokenize. Loaded last, after main.css.
+   ========================================================================== */
+
+/* ---- Typography ---------------------------------------------------------- */
+:root {
+  --font: "Inter", sans-serif;
+  --font-heading: "Inter", sans-serif;
+}
+
+body {
+  font-size: 0.9375rem;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ---- Radius: smaller, consistent corners --------------------------------- */
+html[data-radius=rounded] {
+  --border-radius-lg: 14px;
+  --border-radius-md: 10px;
+  --border-radius-sm: 8px;
+  --border-radius-xl: 999px;
+}
+
+/* ---- Palette: neutral surface + single indigo accent --------------------- */
+html[data-color=light-blue] {
+  --primary: #4f46e5;
+  --primary-darker: #4338ca;
+  --primary-rgb: 79, 70, 229;
+
+  --secondary: #6366f1;
+  --secondary-darker: #4f46e5;
+  --secondary-rgb: 99, 102, 241;
+
+  --tertiary: #818cf8;
+  --tertiary-darker: #6366f1;
+  --tertiary-rgb: 129, 140, 248;
+
+  --quaternary: #a5b4fc;
+  --quaternary-darker: #818cf8;
+  --quaternary-rgb: 165, 180, 252;
+
+  --body: #3f3f46;
+  --alternate: #71717a;
+  --muted: #a1a1aa;
+  --separator: #e4e4e7;
+  --separator-light: #f0f0f1;
+  --body-rgb: 63, 63, 70;
+  --alternate-rgb: 113, 113, 122;
+  --muted-rgb: 161, 161, 170;
+  --separator-rgb: 228, 228, 231;
+  --separator-light-rgb: 240, 240, 241;
+  --body-darker: #27272a;
+  --alternate-darker: #52525b;
+  --muted-darker: #71717a;
+  --separator-darker: #d4d4d8;
+
+  --background: #f7f7f8;
+  --foreground: #ffffff;
+  --background-rgb: 247, 247, 248;
+  --foreground-rgb: 255, 255, 255;
+  --background-theme: #f2f2f4;
+  --background-light: #fafafa;
+  --background-navcolor-light: #ffffff;
+
+  --gradient-1: #4f46e5;
+  --gradient-2: #4f46e5;
+  --gradient-3: #4f46e5;
+  --gradient-1-lighter: #6366f1;
+  --gradient-1-darker: #4338ca;
+
+  --danger: #dc2626;
+  --danger-darker: #b91c1c;
+  --danger-rgb: 220, 38, 38;
+  --warning: #d97706;
+  --warning-darker: #b45309;
+  --warning-rgb: 217, 119, 6;
+  --success: #16a34a;
+  --success-darker: #15803d;
+  --success-rgb: 22, 163, 74;
+  --info: #0891b2;
+  --info-darker: #0e7490;
+  --info-rgb: 8, 145, 178;
+
+  --menu-shadow: 0 1px 2px rgba(15, 15, 20, 0.05);
+  --menu-shadow-navcolor: 0 1px 0 rgba(15, 15, 20, 0.06);
+  --theme-image-filter: none;
+}
+
+/* ---- Elevation: hairline borders instead of heavy drop shadows ----------- */
+.card {
+  box-shadow: none !important;
+  border: 1px solid var(--separator) !important;
+}
+.card.no-shadow {
+  border-color: transparent !important;
+}
+
+.form-control,
+.form-select,
+.custom-select {
+  box-shadow: none !important;
+}
+.form-control.shadow,
+.form-select.shadow,
+.custom-select.shadow {
+  border: 1px solid var(--separator) !important;
+  box-shadow: none !important;
+}
+
+.dropdown-menu {
+  box-shadow: 0 8px 24px rgba(15, 15, 20, 0.08) !important;
+  border: 1px solid var(--separator);
+}
+
+.modal-content {
+  box-shadow: 0 16px 40px rgba(15, 15, 20, 0.12) !important;
+  border: 1px solid var(--separator);
+}
+
+/* Flat accent icon tiles instead of the vendor diagonal gradient */
+.bg-gradient-light,
+.bg-gradient-dark {
+  background-image: none !important;
+  background-color: var(--primary) !important;
+}
+
+/* Buttons: quieter weight, no wide letter-spacing micro-caps */
+.btn {
+  font-weight: 600;
+  letter-spacing: 0;
+}
+
+/* ---- Top navigation: flat neutral bar instead of the color gradient ----- */
+.nav-container {
+  background-image: none !important;
+  background-color: var(--background-navcolor-light) !important;
+}
+.nav-container .nav-shadow {
+  box-shadow: inset 0 -1px 0 var(--separator) !important;
+}
+.nav-container .menu-container .menu > li > a,
+.nav-container .menu-container .menu > li li a,
+.nav-container .menu-container .menu > li > a .icon {
+  color: var(--alternate) !important;
+}
+.nav-container .menu-container .menu a.active,
+.nav-container .menu-container .menu a:hover {
+  background: rgba(var(--primary-rgb), 0.08) !important;
+  border-radius: var(--border-radius-sm);
+}
+.nav-container .menu-container .menu a.active,
+.nav-container .menu-container .menu a.active .icon {
+  color: var(--primary) !important;
+}
+.nav-container .menu-icons > li > a,
+.nav-container .language-switch-container .language-button,
+.nav-container .mobile-buttons-container > a {
+  color: var(--alternate) !important;
+}
+.nav-container .menu-icons > li > a:hover,
+.nav-container .language-switch-container .language-button:hover,
+.nav-container .user-container .user:hover {
+  background: rgba(var(--primary-rgb), 0.08) !important;
+  box-shadow: none !important;
+}
+.nav-container .user-container .user .name {
+  color: var(--body) !important;
+}
+
+/* The .logo container was only ever sized for a small square image; our
+   text fallback (site title) needs it to not get squeezed/wrapped by its
+   flex siblings (menu, user-container, menu-icons). */
+.nav-container .logo {
+  flex-shrink: 0;
+}
+.nav-container .logo span {
+  white-space: nowrap;
+}
+
+/* Sub-menu flyouts: match the flattened card look */
+.nav-container .menu-container .menu ul {
+  background: var(--foreground);
+  border: 1px solid var(--separator);
+  box-shadow: 0 8px 24px rgba(15, 15, 20, 0.08) !important;
+  border-radius: var(--border-radius-md);
+}
