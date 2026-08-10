@@ -88,6 +88,7 @@ class UserController extends Controller
             $save->is_active = true;
             $save->nidn = $request->nidn;
             $save->progdi = $request->progdi;
+            $save->campus_origin = $request->campus_origin;
             $save->status = $request->status;
 
             if($request->role == 'asesor'){
@@ -190,6 +191,7 @@ class UserController extends Controller
             $save->is_active = true;
             $save->nidn = $request->nidn;
             $save->progdi = $request->progdi;
+            $save->campus_origin = $request->campus_origin;
             $save->status = $request->status ?? 'user';
 
             if($request->role == 'asesor'){

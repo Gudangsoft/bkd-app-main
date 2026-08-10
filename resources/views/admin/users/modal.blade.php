@@ -42,6 +42,11 @@
                             class="block w-full rounded-lg border-gray-300 text-sm focus:border-accent-500 focus:ring-accent-500">
                     </div>
                     <div>
+                        <label class="mb-1 block text-sm font-medium text-gray-700">Asal Kampus</label>
+                        <input type="text" name="campus_origin" value="{{ $campus_origin ?? '' }}"
+                            class="block w-full rounded-lg border-gray-300 text-sm focus:border-accent-500 focus:ring-accent-500">
+                    </div>
+                    <div>
                         <label class="mb-1 block text-sm font-medium text-gray-700">Role</label>
                         <select name="role" x-model="role" required
                             class="block w-full rounded-lg border-gray-300 text-sm focus:border-accent-500 focus:ring-accent-500">

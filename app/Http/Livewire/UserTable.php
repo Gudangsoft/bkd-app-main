@@ -16,7 +16,7 @@ class UserTable extends DataTableComponent
     // protected $listeners = ['refreshCustomerLinksTable' => '$refresh'];
 
     public $selected_id, $category;
-    public $uid, $name, $email, $role, $status, $nidn, $progdi, $assessor_fee;
+    public $uid, $name, $email, $role, $status, $nidn, $progdi, $campus_origin, $assessor_fee;
 
     public function configure(): void
     {
@@ -47,6 +47,7 @@ class UserTable extends DataTableComponent
             Column::make("Email", "email"),
             Column::make("NIDN", "nidn"),
             Column::make("Progdi", "progdi"),
+            Column::make("Asal Kampus", "campus_origin"),
             Column::make("Status Serdos", "assessor_fee")
                 ->view('admin.users.view.status_dosen'),
             Column::make("Status Asesor", "status")
@@ -123,6 +124,7 @@ class UserTable extends DataTableComponent
         $this->email = $user->email;
         $this->nidn = $user->nidn;
         $this->progdi = $user->progdi;
+        $this->campus_origin = $user->campus_origin;
         $this->status = $user->status;
         $this->assessor_fee = $user->assessor_fee;
         $this->role = $user->getRoleNames()->isEmpty() ? 'guest' : $user->getRoleNames()[0];
