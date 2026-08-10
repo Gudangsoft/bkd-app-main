@@ -124,7 +124,10 @@ class UserTable extends DataTableComponent
         $this->email = $user->email;
         $this->nidn = $user->nidn;
         $this->progdi = $user->progdi;
-        $this->campus_origin = $user->campus_origin;
+        // Legacy records saved the campus name into progdi (there was no
+        // dedicated field before). Fall back to it here so the edit form
+        // shows the real saved data instead of a blank Asal Kampus.
+        $this->campus_origin = $user->campus_origin ?: $user->progdi;
         $this->status = $user->status;
         $this->assessor_fee = $user->assessor_fee;
         $this->role = $user->getRoleNames()->isEmpty() ? 'guest' : $user->getRoleNames()[0];
