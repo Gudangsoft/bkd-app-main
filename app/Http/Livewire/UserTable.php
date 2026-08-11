@@ -202,6 +202,11 @@ class UserTable extends DataTableComponent
 
         session(['impersonator_id' => auth()->id()]);
         auth()->login($target);
+        // Jetstream's AuthenticateSession middleware compares this against
+        // the current user's password on every request and force-logs-out
+        // on a mismatch - without updating it here, the very next request
+        // (the redirect below) gets treated as a hijacked session.
+        session()->put('password_hash_' . auth()->getDefaultDriver(), $target->getAuthPassword());
 
         return redirect()->route('dashboard.index');
     }

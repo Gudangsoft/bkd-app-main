@@ -248,7 +248,9 @@ class UserController extends Controller
         }
 
         $adminId = session()->pull('impersonator_id');
+        $admin = User::findOrFail($adminId);
         auth()->loginUsingId($adminId);
+        session()->put('password_hash_' . auth()->getDefaultDriver(), $admin->getAuthPassword());
 
         return redirect()->route('users.index');
     }
