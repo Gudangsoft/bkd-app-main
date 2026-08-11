@@ -134,7 +134,11 @@ class PaymentController extends Controller
 
     public function update(Request $request, $id)
     {
-        // dd($request);
+        $request->validate([
+            'assessor_one_id' => 'required|exists:users,id',
+            'assessor_two_id' => 'required|exists:users,id',
+        ]);
+
         $image = '';
         if ($request->file('image')) {
             $validate = $request->validate([
@@ -156,21 +160,111 @@ class PaymentController extends Controller
         }
 
         try {
-            $save = Payment::find($id);
+            $save = Payment::findOrFail($id);
+            $dosen = User::find($save->user_id);
+            $oldRekeningId = $save->rekening_id;
+            $oldAmount = $save->amount;
+
+            if ($request->assessor_one_id != $save->assessor_one_id) {
+                $this->moveAssessorFinance($save, $dosen, $save->assessor_one_id, $request->assessor_one_id, 1);
+                $save->amount_one = $this->calculateAssessorFee($dosen, User::find($request->assessor_one_id));
+                $save->assessor_one_id = $request->assessor_one_id;
+                $save->status_accessor_one = 1;
+            }
+
+            if ($request->assessor_two_id != $save->assessor_two_id) {
+                $this->moveAssessorFinance($save, $dosen, $save->assessor_two_id, $request->assessor_two_id, 2);
+                $save->amount_two = $this->calculateAssessorFee($dosen, User::find($request->assessor_two_id));
+                $save->assessor_two_id = $request->assessor_two_id;
+                $save->status_accessor_two = 1;
+            }
+
+            $save->amount = $save->amount_one + $save->amount_two;
             $save->rekening_id = $request->rekening_id;
-            // $save->assessor_one_id = $request->assessor_one[0];
-            // $save->assessor_two_id = $request->assessor_two[0];
-            // $save->amount = $request->amount;
+
             if ($image) {
                 $save->proof_of_payment = $image;
             }
             $save->description = $request->description;
             $save->save();
 
+            $this->reconcileRekeningSaldo($oldRekeningId, $oldAmount, $save->rekening_id, $save->amount);
+
             Alert::success('Success', Lang::get('dashboard.payment.edit_success'));
             return back();
         } catch (Exception $error) {
-            dd($error->getMessage());
+            report($error);
+            Alert::error('Failed', 'Gagal menyimpan pembayaran: ' . $error->getMessage());
+            return back();
+        }
+    }
+
+    /**
+     * Fee owed to $assessor for reviewing $dosen, per the AssessorFee tier
+     * matching the dosen's assessor_fee, using the column named after the
+     * assessor's own status (internal/external/external_dif). Same lookup
+     * findAssessorOne()/findAssessorTwo() use for the create-payment form.
+     */
+    private function calculateAssessorFee($dosen, $assessor)
+    {
+        if (!$dosen || !$assessor || !$dosen->assessor_fee) {
+            return 0;
+        }
+
+        $fee = AssessorFee::find($dosen->assessor_fee);
+        return $fee ? (int) $fee->{$assessor->status} : 0;
+    }
+
+    /**
+     * Moves a payment's per-assessor payout record when the assigned
+     * assessor changes: drops the old assessor's FinanceAssessor row for
+     * this dosen/slot and creates a fresh one for the new assessor, so
+     * payout totals (FinanceAssessor::getSaldoTotalAttribute) stay correct
+     * for both the outgoing and incoming assessor.
+     */
+    private function moveAssessorFinance($payment, $dosen, $oldAssessorId, $newAssessorId, $assessorOf)
+    {
+        FinanceAssessor::where('dosen_id', $payment->user_id)
+            ->where('user_id', $oldAssessorId)
+            ->where('assessor_of', $assessorOf)
+            ->delete();
+
+        $newAssessor = User::find($newAssessorId);
+
+        FinanceAssessor::create([
+            'dosen_id' => $payment->user_id,
+            'dosen_status' => $dosen->assessor_fee ?? null,
+            'user_id' => $newAssessorId,
+            'amount' => $this->calculateAssessorFee($dosen, $newAssessor),
+            'assessor_of' => $assessorOf,
+            'status' => $payment->status == 1 ? 1 : 0,
+        ]);
+    }
+
+    /**
+     * Undoes the old amount from whichever rekening held it and applies the
+     * new amount to the (possibly different) selected rekening - mirrors
+     * the single saldo credit store() does on create, just as a delta.
+     */
+    private function reconcileRekeningSaldo($oldRekeningId, $oldAmount, $newRekeningId, $newAmount)
+    {
+        if ($oldRekeningId == $newRekeningId) {
+            $delta = $newAmount - $oldAmount;
+            if ($delta != 0 && $rekening = Rekening::find($newRekeningId)) {
+                $rekening->saldo += $delta;
+                $rekening->save();
+            }
+            return;
+        }
+
+        if ($oldRekening = Rekening::find($oldRekeningId)) {
+            $oldRekening->saldo -= $oldAmount;
+            $oldRekening->save();
+        }
+
+        if ($newRekening = Rekening::find($newRekeningId)) {
+            $newRekening->saldo += $newAmount;
+            $newRekening->save();
         }
     }
 

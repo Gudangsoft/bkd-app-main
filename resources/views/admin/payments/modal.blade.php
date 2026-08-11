@@ -54,17 +54,21 @@
                     </div>
                     <div>
                         <label class="mb-1 block text-sm font-medium text-gray-700">@lang('dashboard.payment.assessor_one')</label>
-                        <select class="block w-full rounded-lg border-gray-300 bg-gray-50 text-sm" disabled>
+                        <select name="assessor_one_id" required
+                            class="block w-full rounded-lg border-gray-300 text-sm focus:border-accent-500 focus:ring-accent-500">
                             @foreach ($assessor as $item)
-                                <option {{ $item->id == $assessor_one ? 'selected' : '' }}>{{ $item->name }}</option>
+                                <option value="{{ $item->id }}" {{ $item->id == $assessor_one ? 'selected' : '' }}>{{ $item->name }}
+                                    ({{ $item->status == 'external_dif' ? 'external non kepanitiaan' : $item->status }})</option>
                             @endforeach
                         </select>
                     </div>
                     <div>
                         <label class="mb-1 block text-sm font-medium text-gray-700">@lang('dashboard.payment.assessor_two')</label>
-                        <select class="block w-full rounded-lg border-gray-300 bg-gray-50 text-sm" disabled>
+                        <select name="assessor_two_id" required
+                            class="block w-full rounded-lg border-gray-300 text-sm focus:border-accent-500 focus:ring-accent-500">
                             @foreach ($assessor as $item)
-                                <option {{ $item->id == $assessor_two ? 'selected' : '' }}>{{ $item->name }}</option>
+                                <option value="{{ $item->id }}" {{ $item->id == $assessor_two ? 'selected' : '' }}>{{ $item->name }}
+                                    ({{ $item->status == 'external_dif' ? 'external non kepanitiaan' : $item->status }})</option>
                             @endforeach
                         </select>
                     </div>
@@ -72,6 +76,7 @@
                         <label class="mb-1 block text-sm font-medium text-gray-700">@lang('dashboard.payment.amount')</label>
                         <input type="number" name="amount" value="{{ $amount }}" disabled
                             class="block w-full rounded-lg border-gray-300 bg-gray-50 text-sm">
+                        <p class="mt-1 text-xs text-gray-500">Nominal dihitung ulang otomatis jika Asesor 1/2 diganti.</p>
                     </div>
                     <div>
                         <label class="mb-1 block text-sm font-medium text-gray-700">@lang('dashboard.payment.rekening_payment')</label>
