@@ -11,9 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->string('username')->nullable()->after('name');
-        });
+        // Production already has this column from an undocumented manual
+        // change - this migration only exists to bring fresh installs
+        // (and the test database) up to the same schema.
+        if (!Schema::hasColumn('users', 'username')) {
+            Schema::table('users', function (Blueprint $table) {
+                $table->string('username')->nullable()->after('name');
+            });
+        }
     }
 
     /**
@@ -21,8 +26,10 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn('username');
-        });
+        if (Schema::hasColumn('users', 'username')) {
+            Schema::table('users', function (Blueprint $table) {
+                $table->dropColumn('username');
+            });
+        }
     }
 };

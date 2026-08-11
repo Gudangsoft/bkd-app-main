@@ -11,10 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('payments', function (Blueprint $table) {
-            // 0 = Ditolak, 1 = Lunas, 2 = Pending (PaymentTable::filters()).
-            $table->integer('status')->default(2)->after('description');
-        });
+        // Production already has this column from an undocumented manual
+        // change - this migration only exists to bring fresh installs
+        // (and the test database) up to the same schema.
+        if (!Schema::hasColumn('payments', 'status')) {
+            Schema::table('payments', function (Blueprint $table) {
+                // 0 = Ditolak, 1 = Lunas, 2 = Pending (PaymentTable::filters()).
+                $table->integer('status')->default(2)->after('description');
+            });
+        }
     }
 
     /**
@@ -22,8 +27,10 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('payments', function (Blueprint $table) {
-            $table->dropColumn('status');
-        });
+        if (Schema::hasColumn('payments', 'status')) {
+            Schema::table('payments', function (Blueprint $table) {
+                $table->dropColumn('status');
+            });
+        }
     }
 };
