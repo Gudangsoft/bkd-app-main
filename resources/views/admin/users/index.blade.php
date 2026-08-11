@@ -68,9 +68,9 @@
                                         class="block w-full rounded-lg border-gray-300 text-sm focus:border-accent-500 focus:ring-accent-500">
                                 </div>
                                 <div>
-                                    <label class="mb-1 block text-sm font-medium text-gray-700">Asal PT/Prodi</label>
+                                    <label class="mb-1 block text-sm font-medium text-gray-700">Prodi</label>
                                     <input type="text" name="progdi" value="{{ old('progdi') }}"
-                                        placeholder="UNIVERSITAS SAINS DAN TEKNOLOGI KOMPUTER / Teknik Informatika" required
+                                        placeholder="Teknik Informatika" required
                                         class="block w-full rounded-lg border-gray-300 text-sm focus:border-accent-500 focus:ring-accent-500">
                                 </div>
                                 <div>
