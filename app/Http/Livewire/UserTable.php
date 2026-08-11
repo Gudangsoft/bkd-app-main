@@ -138,13 +138,13 @@ class UserTable extends DataTableComponent
     public function resetPassword($id)
     {
         try {
-            User::find($id)->update([
+            User::findOrFail($id)->update([
                 'password' => Hash::make('bkdstekomoke'),
             ]);
 
             $this->dispatch('resetPasswordOpenModal');
         } catch (Exception $error) {
-            dd($error->getMessage());
+            report($error);
         }
     }
 

@@ -49,7 +49,6 @@ class AssignmentLetterController extends Controller
      */
     public function store(Request $request)
     {
-        dd($request);
         $file_surat = '';
         if($request->file('file_surat')){
             $validate = $request->validate([

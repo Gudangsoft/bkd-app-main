@@ -83,7 +83,9 @@ class SettingController extends Controller
             Alert::success('Tersimpan', 'Data berhasil ditambahkan');
             return back();
         } catch (Exception $error) {
-            dd($error->getMessage());
+            report($error);
+            Alert::error('Failed', 'Gagal menyimpan pengaturan: ' . $error->getMessage());
+            return back();
         }
     }
 }

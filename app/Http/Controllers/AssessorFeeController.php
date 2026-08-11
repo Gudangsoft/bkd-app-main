@@ -80,7 +80,9 @@ class AssessorFeeController extends Controller
             Alert::success('Success', 'Data Bea Asesor berhasil diupdate.');
             return back();
         } catch (Exception $error) {
-            dd($error->getMessage());
+            report($error);
+            Alert::error('Failed', 'Gagal menyimpan bea asesor: ' . $error->getMessage());
+            return back();
         }
     }
 

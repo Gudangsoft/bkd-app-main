@@ -65,8 +65,8 @@ class ImageServices {
 
             return ['status'=>true,'name'=>$imageName];
         }catch(Exception $e){
-            dd($e->getMessage());
-            return ['status'=>$e->getMessage(),'name'=>''];
+            report($e);
+            return ['status'=>false,'name'=>''];
         }
     }
 
@@ -230,7 +230,7 @@ class ImageServices {
             self::uploadToStorage($modul,$imageName);
             return ['status'=>true,'namaImage'=>$imageName];
         }catch(Exception $e){
-            dd($e->getMessage());
+            report($e);
             return ['status'=>false,'namaImage'=>''];
         }
     }

@@ -42,10 +42,6 @@ use Illuminate\Support\Facades\Route;
         Route::get('asset-keuangan', 'assetKeuangan')->name('asset-keuangan');
     });
 
-    Route::prefix('data')->group(function() {
-        Route::get('master-data', [DataController::class, 'dataUser'])->name('data-user');
-    });
-
     Route::resource('payments', PaymentController::class);
     Route::get('payments-trashed', [PaymentController::class,'restore']);
 
@@ -68,6 +64,10 @@ use Illuminate\Support\Facades\Route;
     Route::resource('assessor-fee', AssessorFeeController::class);
 
     Route::group(['middleware' => ['role:admin']], function () {
+        Route::prefix('data')->group(function() {
+            Route::get('master-data', [DataController::class, 'dataUser'])->name('data-user');
+        });
+
         // Route::resource('payments', PaymentController::class);
         Route::resource('payment-assessor', PaymentAssessorController::class);
         Route::resource('rekening', RekeningController::class);

@@ -128,7 +128,9 @@ class PaymentController extends Controller
             Alert::success('Success', Lang::get('dashboard.payment.add_success'));
             return back();
         } catch (Exception $error) {
-            dd($error->getMessage());
+            report($error);
+            Alert::error('Failed', 'Gagal menyimpan pembayaran: ' . $error->getMessage());
+            return back();
         }
     }
 
