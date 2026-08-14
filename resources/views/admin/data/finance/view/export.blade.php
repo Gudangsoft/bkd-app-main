@@ -37,20 +37,20 @@
                 <td>{{ asset('storage/images/proof_of_payment/' . $item->proof_of_payment) }}</td>
                 <td>
                     @if ($item->status_accessor_one == 1)
-                        Belum ditentukan
+                        Asesor belum ditugaskan
                     @elseif($item->status_accessor_one == 2)
-                        Penilaian belum bisa dilakukan
+                        Belum dinilai asesor
                     @elseif($item->status_accessor_one == 3)
-                        Memenuhi
+                        Sudah dinilai asesor
                     @endif
                 </td>
                 <td>
                     @if ($item->status_accessor_two == 1)
-                        Belum ditentukan
+                        Asesor belum ditugaskan
                     @elseif($item->status_accessor_two == 2)
-                        Penilaian belum bisa dilakukan
+                        Belum dinilai asesor
                     @elseif($item->status_accessor_two == 3)
-                        Memenuhi
+                        Sudah dinilai asesor
                     @endif
                 </td>
                 <td>

@@ -30,9 +30,9 @@
                 @foreach ($data as $item)
                     @php
                         $tint1 = $item->status_accessor_one == 3 ? 'bg-green-50 text-green-700' : ($item->status_accessor_one == 2 ? 'bg-yellow-50 text-yellow-700' : 'bg-gray-100 text-gray-600');
-                        $label1 = $item->status_accessor_one == 3 ? 'Memenuhi' : ($item->status_accessor_one == 2 ? 'Penilaian belum bisa dilakukan' : 'Belum ditentukan');
+                        $label1 = $item->status_accessor_one == 3 ? 'Sudah dinilai asesor' : ($item->status_accessor_one == 2 ? 'Belum dinilai asesor' : 'Asesor belum ditugaskan');
                         $tint2 = $item->status_accessor_two == 3 ? 'bg-green-50 text-green-700' : ($item->status_accessor_two == 2 ? 'bg-yellow-50 text-yellow-700' : 'bg-gray-100 text-gray-600');
-                        $label2 = $item->status_accessor_two == 3 ? 'Memenuhi' : ($item->status_accessor_two == 2 ? 'Penilaian belum bisa dilakukan' : 'Belum ditentukan');
+                        $label2 = $item->status_accessor_two == 3 ? 'Sudah dinilai asesor' : ($item->status_accessor_two == 2 ? 'Belum dinilai asesor' : 'Asesor belum ditugaskan');
                         $tint3 = $item->status == 1 ? 'bg-green-50 text-green-700' : ($item->status == 2 ? 'bg-red-50 text-red-700' : 'bg-gray-100 text-gray-600');
                         $label3 = $item->status == 1 ? 'LUNAS' : ($item->status == 2 ? 'DITOLAK' : 'PENDING');
                     @endphp

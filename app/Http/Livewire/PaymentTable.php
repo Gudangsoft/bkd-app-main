@@ -85,7 +85,7 @@ class PaymentTable extends DataTableComponent
                     if (is_null($user)) {
                         return 'User Deleted';
                     }
-                    return e($user->name) . ' <span class="ml-1 inline-flex items-center rounded-full bg-accent-50 px-2 py-0.5 text-[11px] font-medium text-accent-700">' . e($user->status) . '</span>';
+                    return e($user->name) . ' <span class="ml-1 inline-flex items-center rounded-full bg-accent-50 px-2 py-0.5 text-[11px] font-medium text-accent-700">' . e($user->status) . '</span>' . '<br><span class="text-xs text-gray-400">' . e($user->campus_origin ?? '-') . '</span>';
                 })
                 ->html(),
             Column::make("Asesor 2", "assessor_two_id")
@@ -94,7 +94,7 @@ class PaymentTable extends DataTableComponent
                     if (is_null($user)) {
                         return 'User Deleted';
                     }
-                    return e($user->name) . ' <span class="ml-1 inline-flex items-center rounded-full bg-accent-50 px-2 py-0.5 text-[11px] font-medium text-accent-700">' . e($user->status) . '</span>';
+                    return e($user->name) . ' <span class="ml-1 inline-flex items-center rounded-full bg-accent-50 px-2 py-0.5 text-[11px] font-medium text-accent-700">' . e($user->status) . '</span>' . '<br><span class="text-xs text-gray-400">' . e($user->campus_origin ?? '-') . '</span>';
                 })->html(),
             Column::make("Nominal (RP)", "amount")
                 ->format(function ($value) {

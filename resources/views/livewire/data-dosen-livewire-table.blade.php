@@ -24,7 +24,7 @@
                         <td class="py-3 pr-4">
                             @if ($row->assignmentLetterStatusOne($row->user_id)['status'] == true)
                                 @php
-                                    $label1 = $row->status_accessor_one == 3 ? 'Memenuhi' : ($row->status_accessor_one == 2 ? 'Penilaian belum bisa dilakukan' : 'Belum ditentukan');
+                                    $label1 = $row->status_accessor_one == 3 ? 'Sudah dinilai asesor' : ($row->status_accessor_one == 2 ? 'Belum dinilai asesor' : 'Asesor belum ditugaskan');
                                     $tint1 = $row->status_accessor_one == 3 ? 'bg-green-50 text-green-700' : ($row->status_accessor_one == 2 ? 'bg-yellow-50 text-yellow-700' : 'bg-gray-100 text-gray-600');
                                     $disabled1 = $row->status != 1 || $row->assessor_one_id != auth()->user()->id;
                                 @endphp
@@ -40,9 +40,9 @@
                                     </button>
                                     @role('asesor')
                                         <div x-show="open" x-cloak x-transition class="absolute left-0 z-20 mt-1 w-56 rounded-xl border border-gray-100 bg-white p-1 shadow-lg">
-                                            <a href="#" @click.prevent="open = false" wire:click="updateStatusAccessorOne({{ $row->id }}, 3)" class="block rounded-lg px-3 py-2 text-sm text-gray-600 hover:bg-gray-100">Memenuhi</a>
-                                            <a href="#" @click.prevent="open = false" wire:click="updateStatusAccessorOne({{ $row->id }}, 2)" class="block rounded-lg px-3 py-2 text-sm text-gray-600 hover:bg-gray-100">Penilaian belum bisa dilakukan</a>
-                                            <a href="#" @click.prevent="open = false" wire:click="updateStatusAccessorOne({{ $row->id }}, 1)" class="block rounded-lg px-3 py-2 text-sm text-gray-600 hover:bg-gray-100">Belum ditentukan</a>
+                                            <a href="#" @click.prevent="open = false" wire:click="updateStatusAccessorOne({{ $row->id }}, 3)" class="block rounded-lg px-3 py-2 text-sm text-gray-600 hover:bg-gray-100">Sudah dinilai asesor</a>
+                                            <a href="#" @click.prevent="open = false" wire:click="updateStatusAccessorOne({{ $row->id }}, 2)" class="block rounded-lg px-3 py-2 text-sm text-gray-600 hover:bg-gray-100">Belum dinilai asesor</a>
+                                            <a href="#" @click.prevent="open = false" wire:click="updateStatusAccessorOne({{ $row->id }}, 1)" class="block rounded-lg px-3 py-2 text-sm text-gray-600 hover:bg-gray-100">Asesor belum ditugaskan</a>
                                         </div>
                                     @endrole
                                 </div>
@@ -53,7 +53,7 @@
                         <td class="py-3 pr-4">
                             @if ($row->assignmentLetterStatusTwo($row->user_id)['status'] == true)
                                 @php
-                                    $label2 = $row->status_accessor_two == 3 ? 'Memenuhi' : ($row->status_accessor_two == 2 ? 'Penilaian belum bisa dilakukan' : 'Belum ditentukan');
+                                    $label2 = $row->status_accessor_two == 3 ? 'Sudah dinilai asesor' : ($row->status_accessor_two == 2 ? 'Belum dinilai asesor' : 'Asesor belum ditugaskan');
                                     $tint2 = $row->status_accessor_two == 3 ? 'bg-green-50 text-green-700' : ($row->status_accessor_two == 2 ? 'bg-yellow-50 text-yellow-700' : 'bg-gray-100 text-gray-600');
                                     $disabled2 = $row->status != 1 || $row->assessor_two_id != auth()->user()->id;
                                 @endphp
@@ -69,9 +69,9 @@
                                     </button>
                                     @role('asesor')
                                         <div x-show="open" x-cloak x-transition class="absolute left-0 z-20 mt-1 w-56 rounded-xl border border-gray-100 bg-white p-1 shadow-lg">
-                                            <a href="#" @click.prevent="open = false" wire:click="updateStatusAccessorOne({{ $row->id }}, 3)" class="block rounded-lg px-3 py-2 text-sm text-gray-600 hover:bg-gray-100">Memenuhi</a>
-                                            <a href="#" @click.prevent="open = false" wire:click="updateStatusAccessorOne({{ $row->id }}, 2)" class="block rounded-lg px-3 py-2 text-sm text-gray-600 hover:bg-gray-100">Penilaian belum bisa dilakukan</a>
-                                            <a href="#" @click.prevent="open = false" wire:click="updateStatusAccessorOne({{ $row->id }}, 1)" class="block rounded-lg px-3 py-2 text-sm text-gray-600 hover:bg-gray-100">Belum ditentukan</a>
+                                            <a href="#" @click.prevent="open = false" wire:click="updateStatusAccessorOne({{ $row->id }}, 3)" class="block rounded-lg px-3 py-2 text-sm text-gray-600 hover:bg-gray-100">Sudah dinilai asesor</a>
+                                            <a href="#" @click.prevent="open = false" wire:click="updateStatusAccessorOne({{ $row->id }}, 2)" class="block rounded-lg px-3 py-2 text-sm text-gray-600 hover:bg-gray-100">Belum dinilai asesor</a>
+                                            <a href="#" @click.prevent="open = false" wire:click="updateStatusAccessorOne({{ $row->id }}, 1)" class="block rounded-lg px-3 py-2 text-sm text-gray-600 hover:bg-gray-100">Asesor belum ditugaskan</a>
                                         </div>
                                     @endrole
                                 </div>
