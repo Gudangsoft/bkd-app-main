@@ -78,7 +78,8 @@
                             <tr class="border-b border-gray-200 text-[11px] font-semibold uppercase tracking-wide text-gray-400">
                                 <th class="w-8 py-1.5 pr-2">No</th>
                                 <th class="py-1.5 pr-2">Nama</th>
-                                <th class="py-1.5">Asal Kampus</th>
+                                <th class="py-1.5 pr-2">Asal Kampus</th>
+                                <th class="py-1.5">Bidang Studi</th>
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-gray-100">
@@ -86,11 +87,12 @@
                                 <tr>
                                     <td class="py-1.5 pr-2 text-gray-500">{{ $i + 1 }}</td>
                                     <td class="py-1.5 pr-2 text-gray-700">{{ $item->name }}</td>
-                                    <td class="py-1.5 text-gray-500">{{ $item->campus_origin ?? '-' }}</td>
+                                    <td class="py-1.5 pr-2 text-gray-500">{{ $item->campus_origin ?? '-' }}</td>
+                                    <td class="py-1.5 text-gray-500">{{ $item->progdi ?? '-' }}</td>
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="3" class="py-2 text-gray-400">Belum ada data</td>
+                                    <td colspan="4" class="py-2 text-gray-400">Belum ada data</td>
                                 </tr>
                             @endforelse
                         </tbody>

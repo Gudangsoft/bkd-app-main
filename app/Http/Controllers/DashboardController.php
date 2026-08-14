@@ -26,9 +26,9 @@ class DashboardController extends Controller
 
         $assessorQuery = User::where('is_active', true)->role('asesor');
         $assessors = [
-            'internal' => (clone $assessorQuery)->where('status', 'internal')->orderBy('name')->get(['id', 'name', 'campus_origin']),
-            'external' => (clone $assessorQuery)->where('status', 'external')->orderBy('name')->get(['id', 'name', 'campus_origin']),
-            'external_dif' => (clone $assessorQuery)->where('status', 'external_dif')->orderBy('name')->get(['id', 'name', 'campus_origin']),
+            'internal' => (clone $assessorQuery)->where('status', 'internal')->orderBy('name')->get(['id', 'name', 'campus_origin', 'progdi']),
+            'external' => (clone $assessorQuery)->where('status', 'external')->orderBy('name')->get(['id', 'name', 'campus_origin', 'progdi']),
+            'external_dif' => (clone $assessorQuery)->where('status', 'external_dif')->orderBy('name')->get(['id', 'name', 'campus_origin', 'progdi']),
         ];
 
         return view('admin.index', [
