@@ -71,7 +71,12 @@ class PaymentTable extends DataTableComponent
         return [
             Column::make("Id", "id")
                 ->isHidden(),
-            Column::make("Name", "user.name"),
+            Column::make("Name", "user.name")
+                ->format(function ($value, $row) {
+                    $campus = $row->user_campus_origin ?? optional($row->user)->campus_origin ?? '-';
+                    return e($value) . '<br><span class="text-xs text-gray-400">' . e($campus) . '</span>';
+                })
+                ->html(),
             Column::make("Status Dosen", "user.assessor_fee")
                 ->format(fn($value) => $value ==  1 ? 'Serdos' : 'Non Serdos'),
             // Column::make("Nama", "user_id")->searchable()
